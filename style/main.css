@@ -1,0 +1,33 @@
+header{
+    text-align: right;
+    margin-top: -1em;
+}
+
+h3 {
+    color: white;
+    background-color: blue;
+    padding: 0.75em;
+    padding-left: 3em;
+    display: inline-block;
+    border-bottom-left-radius: 50px;
+    font-size: 2em;
+    margin-top: -0.1em;
+    margin-right: -0.3em;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+#gauche{
+    border-right: 1px solid grey;
+}
+
+#droite{
+    text-align: center;
+}
+
+div{
+    height: 100%;
+}
