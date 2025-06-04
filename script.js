@@ -29,6 +29,10 @@ function creeNvListe(event){
     bSubmit.addEventListener("click", ajouterListe);
     form.append(bSubmit);
 
+    const divErreur = document.createElement("div");
+    divErreur.setAttribute("id", "erreur");
+    form.append(divErreur);
+
     const tache = document.createElement("input");
     tache.setAttribute("type", "text");
     tache.setAttribute("placeholder", "Nouvelle tâche");
@@ -41,6 +45,10 @@ function creeNvListe(event){
     bSupp.textContent = "Supprimer la tâche"
     bSupp.addEventListener("click", suppTache);
     form.append(bSupp);
+
+    const divErreur2 = document.createElement("div");
+    divErreur2.setAttribute("id", "erreur2");
+    form.append(divErreur2);
 
     document.getElementById("droite").append(form);
 
@@ -78,22 +86,34 @@ function suppTache(event){
 
 function ajouterListe(event){
     event.preventDefault();
-    const taches = document.querySelectorAll(".tache");
-    let listTache = [document.getElementById("titre").value];
-    for (let tache of taches){
-        listTache.push(tache.value);
-    }
-    listes.push(listTache);
-    const droite = document.getElementById("droite");
-    while (droite.firstChild){
-        droite.removeChild(droite.firstChild);
-    }
+    if (document.getElementById("titre").value.trim()){
+        const taches = document.querySelectorAll(".tache");
+        let listTache = [document.getElementById("titre").value];
+        for (let tache of taches){
+            if (tache.value.trim()){
+            listTache.push(tache.value);
+            }
+        }
+        if (listTache.length > 1){
+            listes.push(listTache);
+            const droite = document.getElementById("droite");
+            while (droite.firstChild){
+                droite.removeChild(droite.firstChild);
+            }
 
-    const li = document.createElement("li");
-    li.textContent = listTache[0];
-    document.getElementById("listes").append(li);
-    li.addEventListener("click", afficherListe);
-    li.dataset.num = listes.length - 1;
+            const li = document.createElement("li");
+            li.textContent = listTache[0];
+            document.getElementById("listes").append(li);
+            li.addEventListener("click", afficherListe);
+            li.dataset.num = listes.length - 1;
+        }
+        else{
+            document.getElementById("erreur2").textContent = "Veuillez ajouter au moins une tâche";
+        }
+    }
+    else{
+        document.getElementById("erreur").textContent = "Veuillez donner un nom à la liste";
+    }
 }
 
 function afficherListe(event){
@@ -109,9 +129,17 @@ function afficherListe(event){
         li.textContent = t;
         const checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
+        const bSup = document.createElement("button");
+        bSup.textContent = "Supprimer la tâche";
+        bSup.addEventListener("click", suppTacheListe);
         li.append(checkbox);
+        li.append(bSup);
         li.dataset.isChecked = 0;
         ul.append(li);
     }
     droite.append(ul);
+}
+
+function suppTacheListe(event){
+    event.currentTarget.parentElement.remove();
 }
