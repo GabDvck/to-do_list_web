@@ -122,6 +122,7 @@ function ajouterListe(event){
     else{
         document.getElementById("erreur").textContent = "Veuillez donner un nom à la liste";
     }
+    localStorage.setItem('listes', JSON.stringify(listes));
 }
 
 function afficherListe(event){
@@ -132,6 +133,23 @@ function afficherListe(event){
     listeActuelle = event.currentTarget.dataset.num;
     h2.textContent = listeAffiche[0];
     droite.append(h2);
+    let filtre = document.createElement("select");
+    filtre.setAttribute("id", "filtre");
+    let touteTache = document.createElement("option");
+    touteTache.setAttribute("value", "touteTache");
+    touteTache.textContent = "Toutes les tâches";
+    let faites = document.createElement("option");
+    faites.setAttribute("value", "faites");
+    faites.textContent = "Tâches faites";
+    let nonFaites = document.createElement("option");
+    nonFaites.setAttribute("value", "nonFaites");
+    nonFaites.textContent = "Tâches non faites";
+    filtre.append(touteTache, faites, nonFaites);
+    droite.append(filtre);
+    const bfiltre = document.createElement("button");
+    bfiltre.textContent = "Filtrer les taches";
+    bfiltre.addEventListener("click", filtrerTaches);
+    droite.append(bfiltre);
     listeAffiche = listeAffiche.slice(1);
     let ul = document.createElement("ul");
     let cpt = 1;
@@ -140,6 +158,7 @@ function afficherListe(event){
         li.textContent = t;
         const checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
+        checkbox.addEventListener("change", checkTache);
         const bSup = document.createElement("button");
         bSup.textContent = "Supprimer la tâche";
         bSup.addEventListener("click", suppTacheListe);
@@ -168,7 +187,7 @@ function suppTacheListe(event){
     else{
         const erreur = document.createElement("div");
         erreur.setAttribute("id", "erreur");
-        document.querySelector("#droite h2").after(erreur);
+        document.querySelector("#droite button").after(erreur);
         document.getElementById("erreur").textContent = "Il doit y avoir au moins une tâche dans votre liste";
     }
 }
@@ -187,4 +206,32 @@ function suppListe(event){
         liListes2[i].dataset.num = i;
     }
     clearDroite();
+    localStorage.setItem('listes', JSON.stringify(listes));
+}
+
+function recupStorage(){
+    listes = JSON.parse(localStorage.getItem("listes"));
+    for (let i = 0; i < listes.length; i++){
+        let li = document.createElement("li");
+        li.textContent = listes[i][0]
+        document.getElementById("listes").append(li);
+        li.addEventListener("click", afficherListe);
+        li.dataset.num = i;
+    }
+}
+
+recupStorage();
+
+function filtrerTaches(event){
+    if (false);
+}
+
+function checkTache(event){
+    let etat = event.currentTarget.parentElement.dataset.isChecked;
+    if (etat == 0){
+        event.currentTarget.parentElement.dataset.isChecked = 1;
+    }
+    else{
+        event.currentTarget.parentElement.dataset.isChecked = 0;
+    }
 }
