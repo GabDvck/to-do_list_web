@@ -2,6 +2,7 @@
 
 let cptTaches = 1;
 let listes = [];
+let listeActuelle = null;
 
 const toggle = document.getElementById("toggle-switch");
 const etat = document.getElementById("etat");
@@ -14,6 +15,7 @@ const nvListe = document.getElementById("nouvelleListe");
 nvListe.addEventListener("click", creeNvListe);
 
 function creeNvListe(event){
+    clearDroite();
     const form = document.createElement("form");
     form.setAttribute("id", "formListe")
 
@@ -84,6 +86,14 @@ function suppTache(event){
     bouton.remove();
 }
 
+function clearDroite(){
+    const droite = document.getElementById("droite");
+            while (droite.firstChild){
+                droite.removeChild(droite.firstChild);
+            }
+    listeActuelle = null;
+}
+
 function ajouterListe(event){
     event.preventDefault();
     if (document.getElementById("titre").value.trim()){
@@ -96,10 +106,8 @@ function ajouterListe(event){
         }
         if (listTache.length > 1){
             listes.push(listTache);
-            const droite = document.getElementById("droite");
-            while (droite.firstChild){
-                droite.removeChild(droite.firstChild);
-            }
+            
+            clearDroite();
 
             const li = document.createElement("li");
             li.textContent = listTache[0];
@@ -117,13 +125,16 @@ function ajouterListe(event){
 }
 
 function afficherListe(event){
+    clearDroite();
     const droite = document.getElementById("droite");
     const h2 = document.createElement("h2");
     let listeAffiche = listes[event.currentTarget.dataset.num];
+    listeActuelle = event.currentTarget.dataset.num;
     h2.textContent = listeAffiche[0];
     droite.append(h2);
     listeAffiche = listeAffiche.slice(1);
     let ul = document.createElement("ul");
+    let cpt = 1;
     for (let t of listeAffiche){
         let li = document.createElement("li");
         li.textContent = t;
@@ -132,14 +143,48 @@ function afficherListe(event){
         const bSup = document.createElement("button");
         bSup.textContent = "Supprimer la tâche";
         bSup.addEventListener("click", suppTacheListe);
+        bSup.dataset.rang = cpt;
         li.append(checkbox);
         li.append(bSup);
         li.dataset.isChecked = 0;
         ul.append(li);
+        cpt += 1;
     }
     droite.append(ul);
+    const bsupp = document.createElement("button");
+    bsupp.textContent = "Supprimer la liste";
+    bsupp.addEventListener("click", suppListe);
+    droite.append(bsupp);
 }
 
 function suppTacheListe(event){
-    event.currentTarget.parentElement.remove();
+    const liste = document.querySelectorAll("#droite ul li");
+    let rang = event.currentTarget.dataset.rang
+    if (liste.length > 1){
+        console.log(rang);
+        event.currentTarget.parentElement.remove();
+        listes[listeActuelle].splice(rang, 1);
+    }
+    else{
+        const erreur = document.createElement("div");
+        erreur.setAttribute("id", "erreur");
+        document.querySelector("#droite h2").after(erreur);
+        document.getElementById("erreur").textContent = "Il doit y avoir au moins une tâche dans votre liste";
+    }
+}
+
+function suppListe(event){
+    listes.splice(listeActuelle, 1);
+    const liListes = document.querySelectorAll("#listes li");
+    for (let li of liListes){
+        if (li.dataset.num == listeActuelle){
+            li.remove();
+        }
+    }
+    const liListes2 = document.querySelectorAll("#listes li");
+    for (let i = 0; i < liListes2.length; i++){
+        console.log(i);
+        liListes2[i].dataset.num = i;
+    }
+    clearDroite();
 }
