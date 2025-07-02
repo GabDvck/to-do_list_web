@@ -1,0 +1,11 @@
+body{
+    background-color: black;
+}
+
+main, header p{
+    color: white;
+}
+
+#gauche{
+    border-right: 1px solid white;
+}

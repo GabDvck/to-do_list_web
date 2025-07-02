@@ -4,13 +4,24 @@ let cptTaches = 1;
 let listes = [];
 let listeActuelle = null;
 
+localStorage.setItem("mode", "clair");
+
 recupStorage();
 
 const toggle = document.getElementById("toggle-switch");
 const etat = document.getElementById("etat");
 
 toggle.addEventListener("change", function() {
-etat.textContent = this.checked ? "Mode sombre" : "Mode clair";
+etat.textContent = this.checked ? "🌙" : "☀️";
+const link = document.getElementById("mode");
+if (link.getAttribute("href") == "style/clair.css"){
+    link.setAttribute("href", "style/sombre.css");
+    localStorage.setItem("mode", "sombre");
+}
+else{
+    link.setAttribute("href", "style/clair.css");
+    localStorage.setItem("mode", "clair");
+}
 });
 
 const nvListe = document.querySelectorAll(".nouvelleListe");
@@ -33,6 +44,7 @@ function creeNvListe(event){
     bSubmit.setAttribute("type", "submit");
     bSubmit.setAttribute("value", "Ajouter la liste");
     bSubmit.addEventListener("click", ajouterListe);
+    bSubmit.setAttribute("class", "submit");
     form.append(bSubmit);
 
     const divErreur = document.createElement("div");
@@ -152,7 +164,7 @@ function afficherListe(event){
     filtre.append(touteTache, faites, nonFaites);
     droite.append(filtre);
     const bfiltre = document.createElement("button");
-    bfiltre.textContent = "Filtrer les taches";
+    bfiltre.textContent = "Filtrer les tâches";
     bfiltre.addEventListener("click", filtrerTaches);
     droite.append(bfiltre);
     listeAffiche = listeAffiche.slice(1);
@@ -181,6 +193,7 @@ function afficherListe(event){
     const bnvTache = document.createElement("button");
     bnvTache.textContent = "Ajouter une nouvelle tâche";
     bnvTache.addEventListener("click", nvTacheListeCreee);
+    bnvTache.setAttribute("id", "bnvTache");
     droite.append(bnvTache);
     const bsupp = document.createElement("button");
     bsupp.textContent = "Supprimer la liste";
@@ -250,6 +263,15 @@ function recupStorage(){
             li.dataset.num = i;
         }
     }
+
+    const link = document.getElementById("mode");
+    if (localStorage.getItem("mode") == "sombre"){
+        link.setAttribute("href", "style/sombre.css");
+        document.querySelector(".etat").textContent = "🌙";
+    }
+    else{
+        link.setAttribute("href", "style/clair.css");
+    }
 }
 
 function filtrerTaches(event){
@@ -302,6 +324,7 @@ function checkTache(event){
 }
 
 function nvTacheListeCreee(event){
+    event.currentTarget.style.display = "none";
     const tache = document.createElement("input");
     tache.setAttribute("type", "text");
     tache.setAttribute("placeholder", "Nouvelle tâche");
@@ -316,6 +339,7 @@ function nvTacheListeCreee(event){
 }
 
 function ajouterTache(event){
+    document.getElementById("bnvTache").style.display = "inline-block";
     const ul = document.querySelector("#droite ul");
     const li = document.createElement("li");
     li.textContent = document.querySelector(".tache").value;

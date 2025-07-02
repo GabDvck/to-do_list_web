@@ -1,22 +1,39 @@
+/*------------------------body------------------------*/
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 /*------------------------header------------------------*/
 
 header{
     display: grid;
-    grid-template-columns: 50% 50%;;
-    text-align: right;
+    grid-template-columns: 60% 40%;
     margin-top: -1em;
 }
 
-h3 {
-    color: white;
+header h1{
+    font-size: 1.8em;
     background-color: #000080;
     padding: 0.75em;
-    padding-left: 3em;
-    display: inline-block;
     border-bottom-left-radius: 50px;
-    font-size: 2em;
+    margin: 0;
     margin-top: -0.1em;
     margin-right: -0.3em;
+    height: 3em;
+    background-image: url("../img/logo1.png");
+    background-repeat: no-repeat;
+    background-position: calc(100% + 2em) center;
+    background-size: 50%;
+    display: grid;
+    align-items: center; 
+}
+
+header p{
+    grid-row-start: 2;
+    grid-column-start: 2;
+    align-self: start;
+    text-align: center;
 }
 
 /*------------------------bouton switch------------------------*/
@@ -74,10 +91,54 @@ main{
     grid-template-columns: 50% 50%;
 }
 
-#gauche{
-    border-right: 1px solid grey;
+#gauche li{
+    font-size: 1.5em;
+}
+
+#gauche button{
+    font-size: 1.2em;
 }
 
 #droite{
     text-align: center;
+    align-self: center; 
+}
+
+#erreur, #erreur2{
+    color: red;
+}
+
+button, .submit{
+    border-radius: 10px;
+}
+
+button, input{
+    margin: 1em;
+}
+
+input.tache{
+    margin-bottom: 0.5em;
+}
+
+/*------------------------footer------------------------*/
+
+footer{
+    background-color: #000080;
+    color: white;
+    padding: 0.5em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer img{
+    height: 1.5em;
+    margin-right: 0.4em;
+    vertical-align: middle;
+}
+
+a{
+    color: white;
+    text-decoration: none;
 }

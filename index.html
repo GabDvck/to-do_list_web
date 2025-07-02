@@ -4,6 +4,8 @@
         <title>To Do List Web</title>
         <meta charset="UTF-8">
         <link href="style/main.css" rel="stylesheet">
+        <link id="mode" href="style/clair.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <script src="script.js" defer></script>
     </head>
 
@@ -14,13 +16,14 @@
                 <input type="checkbox" id="toggle-switch">
                 <span class="slider"></span>
             </label>
-            <span class="etat" id="etat">Mode clair</span></div>
-            <h3>To do list</h3>
+            <span class="etat" id="etat">☀️</span></div>
+            <h1>Le site qui organise vos tâches!</h1>
+            <p>Capturez, organisez et traitez vos tâches à faire où que vous soyez.</p>
         </header>
 
         <main>
             <div id="gauche">
-                <h2>Vos listes</h2>
+                <h2>Mes listes</h2>
                 <p></p>
                 <ul id="listes"></ul> 	<!-- liste qui contiendras toutes les to-do listes de l'utilisateur -->
                 <button class="nouvelleListe">Créer une nouvelle liste</button>
@@ -31,6 +34,12 @@
                 <button class="nouvelleListe">Créer une nouvelle liste</button>
             </div>
         </main>
+
+        <footer>
+            <p><p>© 2025 Gabriel Devick - To-Do List PWA</p></p>
+            <p><img src="img/logo_github.png" alt="logo github"><a href="https://github.com/GabDvck">Code source sur GitHub</a></p>
+            <p><img src="img/mail.png" alt="logo mail">gabriel.devick@gmail.com</p>
+        </footer>
 
     </body>
 </html>
