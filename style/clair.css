@@ -1,3 +1,11 @@
 #gauche{
     border-right: 1px solid black;
 }
+
+#listes li{
+    background-color: #F5F5F5;
+}
+
+#listes li:hover{
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}

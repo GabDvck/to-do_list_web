@@ -17,10 +17,12 @@ const link = document.getElementById("mode");
 if (link.getAttribute("href") == "style/clair.css"){
     link.setAttribute("href", "style/sombre.css");
     localStorage.setItem("mode", "sombre");
+    document.getElementById("logo").setAttribute("src", "img/logo2-v2-blanc.png");
 }
 else{
     link.setAttribute("href", "style/clair.css");
     localStorage.setItem("mode", "clair");
+    document.getElementById("logo").setAttribute("src", "img/logo2-v2.png");
 }
 });
 
@@ -111,6 +113,8 @@ function clearDroite(){
 }
 
 function ajouterListe(event){
+    document.getElementById("erreur").textContent = "";
+    document.getElementById("erreur2").textContent = "";
     event.preventDefault();
     if (document.getElementById("titre").value.trim()){
         const taches = document.querySelectorAll(".tache");
@@ -190,6 +194,9 @@ function afficherListe(event){
         cpt += 1;
     }
     droite.append(ul);
+    const p = document.createElement("p");
+    p.setAttribute("id", "messFiltre");
+    droite.append(p);
     const bnvTache = document.createElement("button");
     bnvTache.textContent = "Ajouter une nouvelle tâche";
     bnvTache.addEventListener("click", nvTacheListeCreee);
@@ -268,6 +275,7 @@ function recupStorage(){
     if (localStorage.getItem("mode") == "sombre"){
         link.setAttribute("href", "style/sombre.css");
         document.querySelector(".etat").textContent = "🌙";
+        document.getElementById("toggle-switch").checked = true;
     }
     else{
         link.setAttribute("href", "style/clair.css");
@@ -280,6 +288,8 @@ function filtrerTaches(event){
 }
 
 function afficheListeFiltree(filtre){
+    const p = document.getElementById("messFiltre");
+    p.textContent = "";
     const ul = document.querySelector("#droite ul");
     while (ul.firstChild){
         ul.removeChild(ul.firstChild);
@@ -306,6 +316,10 @@ function afficheListeFiltree(filtre){
         }
             cpt += 1;
             }
+        if (!ul.firstChild){
+            const p = document.getElementById("messFiltre");
+            p.textContent = "Aucune tâche ne correspond au filtre";
+        }
 }
 
 function checkTache(event){

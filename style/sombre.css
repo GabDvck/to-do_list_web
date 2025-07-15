@@ -9,3 +9,12 @@ main, header p{
 #gauche{
     border-right: 1px solid white;
 }
+
+#listes li{
+    background-color: white;
+    color: black;
+}
+
+#listes li:hover{
+    box-shadow: 0 2px 10px white;
+}

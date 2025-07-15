@@ -1,0 +1,26 @@
+@media (max-width: 1400px){
+    header h1{
+        background-image: none;
+    }
+
+    #logo{
+        display: block;
+        width: 8em;
+        grid-row-start: 1;
+        grid-column-start: 1;
+    }
+
+    #contain-checkbox{
+        grid-row-start: 2;
+        grid-column-start: 1;
+    }
+
+    header h1{
+        grid-row-start: 1;
+        grid-column-start: 2;
+    }
+
+    #listes li{
+        margin: auto 1em 0.4em 0.5em;
+    }
+}

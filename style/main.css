@@ -13,6 +13,7 @@ header{
 }
 
 header h1{
+    color: white;
     font-size: 1.8em;
     background-color: #000080;
     padding: 0.75em;
@@ -21,9 +22,9 @@ header h1{
     margin-top: -0.1em;
     margin-right: -0.3em;
     height: 3em;
-    background-image: url("../img/logo1.png");
+    background-image: url("../img/logo_blanc.png");
     background-repeat: no-repeat;
-    background-position: calc(100% + 2em) center;
+    background-position: calc(100% + 3em) center;
     background-size: 50%;
     display: grid;
     align-items: center; 
@@ -34,6 +35,10 @@ header p{
     grid-column-start: 2;
     align-self: start;
     text-align: center;
+}
+
+#logo{
+    display: none;
 }
 
 /*------------------------bouton switch------------------------*/
@@ -91,8 +96,18 @@ main{
     grid-template-columns: 50% 50%;
 }
 
-#gauche li{
+#listes{
     font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#listes li{
+    margin: auto 15em 1em 0.5em;
+    padding: 0.3em 1em;
+    display: block;
+    transition: box-shadow 0.5s ease;
 }
 
 #gauche button{
