@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
-        <title>To Do List Web</title>
+        <title>To Do List</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="style/main.css" rel="stylesheet">
         <link href="style/responsive.css" rel="stylesheet">
         <link id="mode" href="style/clair.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="img/512X512.png">
+        <link rel="manifest" href="manifest.json">
         <script src="script.js" defer></script>
+        <script src="service-worker.js" defer></script>
+        <link rel="apple-touch-icon" href="img/512X512.png">
+        <meta name="apple-mobile-web-app-status-bar" content="white">
+        <meta http-equiv="x-UA-Compatible" content="ie=edge">
+        <meta name="theme-color" content="white">
     </head>
 
     <body>
         <header>
             <div class="contain-checkbox">
-             <label class="switch">
+             <label class="switch" class="sr-only"> switch
                 <input type="checkbox" id="toggle-switch">
                 <span class="slider"></span>
             </label>

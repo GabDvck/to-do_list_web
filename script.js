@@ -1,5 +1,18 @@
 "use strict";
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log("Service worker enregistré ✅"))
+    .catch(err => console.error("Erreur d'enregistrement SW ❌", err));
+
+  // Forcer l'activation du SW en attente
+  navigator.serviceWorker.getRegistration().then(registration => {
+    if (registration && registration.waiting) {
+      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    }
+  });
+}
+
 let cptTaches = 1;
 let listes = [];
 let listeActuelle = null;
