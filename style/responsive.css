@@ -24,3 +24,25 @@
         margin: auto 1em 0.4em 0.5em;
     }
 }
+
+@media (max-width: 550px){
+    header h1{
+        display: none;
+    }
+
+    header p{
+        display: none;
+    }
+
+    .contain-checkbox{
+        grid-row-start: 1;
+        grid-column-start: 2;
+        align-self: center;
+        justify-self: right;
+
+    }
+
+    footer{
+        display: none;
+    }
+}
