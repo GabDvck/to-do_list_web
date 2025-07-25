@@ -1,7 +1,7 @@
 {
     "name": "To Do List",
     "short_name": "TDL",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "white",
     "theme_color": "white",
@@ -9,12 +9,12 @@
     "icons": [{
         "src": "img/192X192.png",
         "type": "image/png",
-        "size": "192X192",
+        "sizes": "192x192",
         "purpose": "any maskable"
     },
     {
        "src": "img/512X512.png",
         "type": "image/png",
-        "size": "512X512" 
+        "sizes": "512x512" 
     }]
 }
