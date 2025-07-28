@@ -1,11 +1,12 @@
 "use strict";
 
+// Enregistrement du Service Worker si disponible
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/to-do_list_web/service-worker.js')
     .then(() => console.log("Service worker enregistré ✅"))
     .catch(err => console.error("Erreur d'enregistrement SW ❌", err));
 
-  // Forcer l'activation du SW en attente
+  // Active immédiatement un service worker en attente
   navigator.serviceWorker.getRegistration().then(registration => {
     if (registration && registration.waiting) {
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });
@@ -13,18 +14,19 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-let cptTaches = 1;
-let listes = [];
-let listeActuelle = null;
+let cptTaches = 1; // compteurs de taches pour les classes
+let listes = []; // contient toutes les listes de taches
+let listeActuelle = null; // index de la liste afichée actuelle
 
-localStorage.setItem("mode", "clair");
+localStorage.setItem("mode", "clair"); // Valeur initiale du thème
 
-recupStorage();
+recupStorage(); // Chargement des listes et thème au démarrage
 
 const toggle = document.getElementById("toggle-switch");
 const etat = document.getElementById("etat");
 
 toggle.addEventListener("change", function() {
+    // Bascule entre clair et sombre et met à jour le logo
 etat.textContent = this.checked ? "🌙" : "☀️";
 const link = document.getElementById("mode");
 if (link.getAttribute("href") == "style/clair.css"){
@@ -45,6 +47,7 @@ for (let bt of nvListe){
 }
 
 function creeNvListe(event){
+    // Création dynamique du formulaire pour une nouvelle liste avec une première tâche
     clearDroite();
     const form = document.createElement("form");
     form.setAttribute("id", "formListe")
@@ -92,6 +95,7 @@ function creeNvListe(event){
 }
 
 function nvTache(event){
+    // Ajoute une nouvelle ligne de tâche avec son bouton de suppression
     cptTaches += 1;
     const form = document.getElementById("formListe");
     const tacheN = document.createElement("input");
@@ -109,6 +113,7 @@ function nvTache(event){
 }
 
 function suppTache(event){
+     // Supprime à la fois le champ texte et son bouton associé
     event.preventDefault();
     const bouton = event.currentTarget;
     const cBouton = bouton.className;
@@ -126,6 +131,10 @@ function clearDroite(){
 }
 
 function ajouterListe(event){
+    // Vérifie que la liste a un titre
+    // Vérifie qu'au moins une tâche est renseignée
+    // Crée un objet liste au format [[titre, 0], [tâche1, 0], ...]
+    // L'ajoute dans `listes`, met à jour le DOM et sauvegarde
     document.getElementById("erreur").textContent = "";
     document.getElementById("erreur2").textContent = "";
     event.preventDefault();
@@ -160,6 +169,8 @@ function ajouterListe(event){
 }
 
 function afficherListe(event){
+    // Affiche toutes les tâches de la liste sélectionnée
+    // Ajoute une interface de filtrage (faites / non faites / toutes)
     clearDroite();
     const droite = document.getElementById("droite");
     const h2 = document.createElement("h2");
@@ -222,6 +233,8 @@ function afficherListe(event){
 }
 
 function suppTacheListe(event){
+    // Supprime une tâche d'une liste existante (si au moins une reste)
+    // Met à jour `listes` et `localStorage`
     const liste = document.querySelectorAll("#droite ul li");
     let rang = event.currentTarget.parentElement.dataset.rang;
     if (liste.length > 1){
@@ -238,6 +251,8 @@ function suppTacheListe(event){
 }
 
 function suppListe(event){
+    // Supprime une liste entière, met à jour les indices
+    // Réaffiche un message d'accueil s'il ne reste plus de listes
     listes.splice(listeActuelle, 1);
     const liListes = document.querySelectorAll("#listes li");
     for (let li of liListes){
@@ -267,6 +282,9 @@ function suppListe(event){
 }
 
 function recupStorage(){
+    // Charge les listes depuis localStorage (ou initialise à vide)
+    // Reconstruit l'interface liste à gauche
+    // Restaure le thème clair/sombre
     listes = JSON.parse(localStorage.getItem("listes"));
     if (listes == null || !listes.length){
         listes = [];
@@ -301,6 +319,8 @@ function filtrerTaches(event){
 }
 
 function afficheListeFiltree(filtre){
+    // Affiche uniquement les tâches en fonction du filtre sélectionné :
+    // 0 = non faites, 1 = faites, 3 = toutes
     const p = document.getElementById("messFiltre");
     p.textContent = "";
     const ul = document.querySelector("#droite ul");
@@ -336,6 +356,8 @@ function afficheListeFiltree(filtre){
 }
 
 function checkTache(event){
+    // Met à jour le statut (faite / non faite) de la tâche cochée
+    // Sauvegarde dans `listes` et `localStorage`
     let etat = event.currentTarget.parentElement.dataset.isChecked;
     if (etat == 0){
         event.currentTarget.parentElement.dataset.isChecked = 1;
@@ -351,6 +373,7 @@ function checkTache(event){
 }
 
 function nvTacheListeCreee(event){
+    // Prépare l’ajout d’une nouvelle tâche dans une liste déjà existante
     event.currentTarget.style.display = "none";
     const tache = document.createElement("input");
     tache.setAttribute("type", "text");
@@ -366,6 +389,7 @@ function nvTacheListeCreee(event){
 }
 
 function ajouterTache(event){
+    // Ajoute la tâche tapée dans l’interface et la sauvegarde
     document.getElementById("bnvTache").style.display = "inline-block";
     const ul = document.querySelector("#droite ul");
     const li = document.createElement("li");
